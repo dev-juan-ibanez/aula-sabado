@@ -14,6 +14,7 @@ Criador de personagens construído somente com HTML, CSS e JavaScript, sem frame
 - Cópia do resumo do personagem para a área de transferência.
 - Layout responsivo para desktop, tablet e celular.
 - Expansão jogável "As Minas de Umbra", com exploração, mineração, combate e progressão.
+- Sprites pixel-art em CSS para as quatro classes jogáveis e o guardião.
 
 ## Como executar
 
@@ -42,6 +43,8 @@ Depois, acesse `http://localhost:8000`.
 ## Expansão jogável
 
 Na seção **As Minas de Umbra**, use as setas ou WASD para explorar o mundo, `Espaço` para atacar e o botão **Minerar** para coletar minério. O progresso da aventura é salvo automaticamente no navegador, junto com a ficha do personagem.
+
+Os sprites são desenhados diretamente em CSS e mudam automaticamente quando a classe da ficha é alterada: Arcanista, Guardião, Batedor e Oráculo têm cores, silhuetas e equipamentos próprios.
 
 ## Tecnologias
 

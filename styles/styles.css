@@ -87,6 +87,33 @@ input:focus { border-color:var(--accent); }
 .sun-disc { width:215px; height:215px; border-radius:50%; position:absolute; top:72px; left:50%; transform:translateX(-50%); background:#b68a50; opacity:.3; filter:blur(1px); }
 .portrait-glow { position:absolute; width:190px; height:160px; bottom:25px; left:50%; transform:translateX(-50%); background:var(--accent); opacity:.15; filter:blur(42px); }
 .character-art { position:absolute; inset:0; --hero:#e5a84c; }
+.character-art > div:not(.portrait-sprite) { display:none; }
+.sprite { --sprite-cloak:#e5a84c; --sprite-cloak-dark:#49382b; --sprite-skin:#b77859; --sprite-hair:#272124; --sprite-metal:#c5c6bd; image-rendering:pixelated; }
+.sprite-player { width:48px; height:64px; position:relative; background:
+  linear-gradient(var(--sprite-hair) 0 0) 12px 5px/24px 12px no-repeat,
+  linear-gradient(var(--sprite-skin) 0 0) 16px 14px/16px 15px no-repeat,
+  linear-gradient(var(--sprite-cloak) 0 0) 11px 29px/26px 26px no-repeat,
+  linear-gradient(var(--sprite-cloak-dark) 0 0) 5px 48px/38px 11px no-repeat,
+  linear-gradient(var(--sprite-metal) 0 0) 9px 31px/7px 15px no-repeat,
+  linear-gradient(var(--sprite-metal) 0 0) 32px 31px/7px 15px no-repeat,
+  linear-gradient(#e9dfc8 0 0) 20px 19px/3px 3px no-repeat,
+  linear-gradient(#e9dfc8 0 0) 27px 19px/3px 3px no-repeat; }
+.sprite-player::after { content:''; position:absolute; left:22px; top:28px; width:5px; height:6px; background:var(--sprite-metal); }
+.sprite-arcanista { --sprite-cloak:#6954a7; --sprite-cloak-dark:#302849; }
+.sprite-arcanista::before { content:''; position:absolute; width:4px; height:47px; right:1px; top:17px; background:#795b3b; box-shadow:0 -4px 0 2px var(--hero, #e5a84c); }
+.sprite-guardiao { --sprite-cloak:#5f7480; --sprite-cloak-dark:#293d47; --sprite-metal:#d4ad61; }
+.sprite-guardiao::before { content:''; position:absolute; width:17px; height:22px; left:0; top:28px; background:#6d8490; border:3px solid #d4ad61; }
+.sprite-batedor { --sprite-cloak:#4d8c6f; --sprite-cloak-dark:#273f37; }
+.sprite-batedor::before { content:''; position:absolute; width:4px; height:28px; right:1px; top:28px; background:#c5a06c; transform:rotate(28deg); }
+.sprite-oraculo { --sprite-cloak:#a06491; --sprite-cloak-dark:#482c48; --sprite-metal:#d9b8e3; }
+.sprite-oraculo::before { content:'✦'; position:absolute; right:-3px; top:5px; color:#d9b8e3; font-size:15px; text-shadow:0 0 5px #d9b8e3; }
+.portrait-sprite { position:absolute; left:50%; bottom:62px; transform:translateX(-50%) scale(2.5); transform-origin:bottom center; z-index:2; }
+.game-world .sprite { width:48px; height:64px; transform:translate(-10px,-18px) scale(.7); transform-origin:top left; }
+.sprite-enemy { --sprite-cloak:#a94e4e; --sprite-cloak-dark:#46272d; --sprite-skin:#cf8060; --sprite-hair:#392126; }
+.sprite-enemy::before { content:'☠'; position:absolute; left:11px; top:9px; color:#f0d7b1; font-size:20px; z-index:1; }
+.sprite-enemy::after { content:''; position:absolute; left:8px; top:28px; width:32px; height:25px; background:var(--sprite-cloak); clip-path:polygon(15% 0,85% 0,100% 100%,0 100%); }
+.game-player::after { content:''; }
+.game-player.sprite-player::after { content:''; }
 .character-shadow { position:absolute; width:190px; height:28px; bottom:56px; left:50%; transform:translateX(-50%); background:#141518; border-radius:50%; opacity:.7; filter:blur(3px); }
 .cloak-back { position:absolute; width:180px; height:245px; bottom:62px; left:50%; transform:translateX(-50%); background:#16171a; clip-path:polygon(25% 0,75% 0,100% 100%,0 100%); }
 .body { position:absolute; width:112px; height:170px; bottom:74px; left:50%; transform:translateX(-50%); background:var(--hero); clip-path:polygon(25% 0,75% 0,100% 100%,0 100%); opacity:.9; }
@@ -136,10 +163,7 @@ input:focus { border-color:var(--accent); }
 .world-tile.ore { background:#4d5054; box-shadow:inset 0 0 0 1px #62666a, inset 0 0 0 5px rgba(229,168,76,.22); }
 .world-tile.ore::after { content:'◇'; color:#e5a84c; display:grid; place-items:center; height:100%; font-size:14px; }
 .game-entity { position:absolute; z-index:3; width:4.16%; height:10%; display:grid; place-items:center; transition:transform .18s ease; }
-.game-player { color:var(--accent); font-size:22px; filter:drop-shadow(0 3px 2px #17202a); }
-.game-player::after { content:'◆'; }
-.game-enemy { color:#d67862; font-size:20px; filter:drop-shadow(0 3px 2px #17202a); }
-.game-enemy::after { content:'☠'; }
+.game-player, .game-enemy { filter:drop-shadow(0 3px 2px #17202a); }
 .game-controls { min-height:62px; padding:12px 18px; display:flex; justify-content:space-between; align-items:center; gap:15px; border-top:1px solid #303135; }
 .control-hint { color:#77787c; font-size:10px; }
 .control-hint b { color:#b8b5ae; font-size:9px; }

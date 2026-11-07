@@ -13,6 +13,7 @@ const classData = {
   Oráculo: { ability: 'Presságio', text: 'Escuta ecos do futuro nas pequenas coisas.', quote: '“Toda escolha deixa uma sombra antes de acontecer.”' }
 };
 const colorData = { amber: '#e5a84c', coral: '#e87862', mint: '#66c9ac', blue: '#72a6e8', violet: '#a88ce0' };
+const spriteData = { Arcanista: 'sprite-arcanista', Guardião: 'sprite-guardiao', Batedor: 'sprite-batedor', Oráculo: 'sprite-oraculo' };
 const maxPoints = 35;
 
 const $ = (selector) => document.querySelector(selector);
@@ -30,6 +31,9 @@ function render() {
   $('#pointsLeft').textContent = maxPoints - Object.values(state.stats).reduce((sum, value) => sum + value, 0);
   $('#characterArt').style.setProperty('--hero', colorData[state.color]);
   $('#portraitStage').style.setProperty('--accent', colorData[state.color]);
+  $('#characterArt').className = 'character-art';
+  $('#characterArt .portrait-sprite').className = `portrait-sprite sprite sprite-player ${spriteData[state.className]}`;
+  if (typeof game !== 'undefined') renderGame();
 
   $$('.stat-row').forEach((row) => {
     const stat = row.dataset.stat;
@@ -62,8 +66,9 @@ $$('#classChoices .choice-card').forEach((button) => button.addEventListener('cl
   state.className = button.dataset.class;
   setSelected('#classChoices .choice-card', 'class', state.className);
   render();
+}));
 
-  const game = {
+const game = {
     width: 24, height: 10, player: { x: 3, y: 7 }, enemy: { x: 18, y: 7, alive: true },
     health: 100, ore: 0, xp: 0, level: 1, blocks: []
   };
@@ -92,10 +97,10 @@ $$('#classChoices .choice-card').forEach((button) => button.addEventListener('cl
     const grid = $('#worldGrid');
     grid.innerHTML = game.blocks.map((block) => `<span class="world-tile ${block.type}" style="grid-column:${block.x + 1};grid-row:${block.y + 1}"></span>`).join('');
     const player = document.createElement('span');
-    player.className = 'game-entity game-player'; Object.assign(player.style, gamePosition(game.player)); grid.append(player);
+    player.className = `game-entity game-player sprite sprite-player ${spriteData[state.className]}`; Object.assign(player.style, gamePosition(game.player)); grid.append(player);
     if (game.enemy.alive) {
       const enemy = document.createElement('span');
-      enemy.className = 'game-entity game-enemy'; Object.assign(enemy.style, gamePosition(game.enemy)); grid.append(enemy);
+      enemy.className = 'game-entity game-enemy sprite sprite-enemy'; Object.assign(enemy.style, gamePosition(game.enemy)); grid.append(enemy);
     }
     const levelXp = (game.level - 1) * 50;
     const progress = Math.min(100, ((game.xp - levelXp) / 50) * 100);
@@ -154,8 +159,6 @@ $$('#classChoices .choice-card').forEach((button) => button.addEventListener('cl
   $('#resetGameButton').addEventListener('click', () => { Object.assign(game, { player: { x: 3, y: 7 }, enemy: { x: 18, y: 7, alive: true }, health: 100, ore: 0, xp: 0, level: 1 }); createWorld(); renderGame(); gameMessage('Um novo mundo foi criado. Boa sorte, aventureiro!'); });
   createWorld();
   renderGame();
-}));
-
 $$('#colorChoices .swatch').forEach((button) => button.addEventListener('click', () => {
   state.color = button.dataset.color;
   setSelected('#colorChoices .swatch', 'color', state.color);
