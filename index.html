@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101114">
+  <title>Forja | Criador de Personagens</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Forja, início">
+        <span class="brand-mark">✦</span>
+        <span>FORJA</span>
+      </a>
+      <div class="topbar-center">
+        <span class="eyebrow">CRIADOR DE PERSONAGENS</span>
+        <span class="save-status"><i></i> Salvamento automático</span>
+      </div>
+      <div class="topbar-actions">
+        <button class="icon-button" id="randomizeButton" type="button" title="Gerar personagem aleatório" aria-label="Gerar personagem aleatório">↻</button>
+        <button class="outline-button" id="clearButton" type="button">Limpar</button>
+        <button class="primary-button" id="saveButton" type="button"><span>Salvar ficha</span><span class="button-arrow">↗</span></button>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <aside class="editor-panel">
+        <div class="panel-intro">
+          <span class="section-kicker">NOVA FICHA <span>01</span></span>
+          <h1>Quem entra<br><em>na história?</em></h1>
+          <p>Defina a essência do seu personagem. O resto se revela no caminho.</p>
+        </div>
+
+        <form id="characterForm">
+          <div class="field-group">
+            <label for="characterName">Nome do personagem</label>
+            <input id="characterName" type="text" maxlength="24" value="Aster Valen" autocomplete="off">
+          </div>
+
+          <div class="field-group">
+            <label>Classe</label>
+            <div class="choice-grid class-grid" id="classChoices">
+              <button type="button" class="choice-card selected" data-class="Arcanista" data-icon="⌁">
+                <span class="choice-icon">⌁</span><span>Arcanista</span>
+              </button>
+              <button type="button" class="choice-card" data-class="Guardião" data-icon="◈">
+                <span class="choice-icon">◈</span><span>Guardião</span>
+              </button>
+              <button type="button" class="choice-card" data-class="Batedor" data-icon="⌁">
+                <span class="choice-icon">⌁</span><span>Batedor</span>
+              </button>
+              <button type="button" class="choice-card" data-class="Oráculo" data-icon="✦">
+                <span class="choice-icon">✦</span><span>Oráculo</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label>Paleta do manto</label>
+            <div class="swatches" id="colorChoices">
+              <button type="button" class="swatch selected" data-color="amber" style="--swatch:#e5a84c" aria-label="Âmbar"></button>
+              <button type="button" class="swatch" data-color="coral" style="--swatch:#e87862" aria-label="Coral"></button>
+              <button type="button" class="swatch" data-color="mint" style="--swatch:#66c9ac" aria-label="Menta"></button>
+              <button type="button" class="swatch" data-color="blue" style="--swatch:#72a6e8" aria-label="Azul"></button>
+              <button type="button" class="swatch" data-color="violet" style="--swatch:#a88ce0" aria-label="Violeta"></button>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label>Traço marcante <span class="optional">escolha até 3</span></label>
+            <div class="trait-list" id="traitChoices">
+              <button type="button" class="trait selected" data-trait="Curioso">Curioso <span>+</span></button>
+              <button type="button" class="trait selected" data-trait="Leal">Leal <span>+</span></button>
+              <button type="button" class="trait" data-trait="Inquieto">Inquieto <span>+</span></button>
+              <button type="button" class="trait" data-trait="Sarcástico">Sarcástico <span>+</span></button>
+              <button type="button" class="trait" data-trait="Resiliente">Resiliente <span>+</span></button>
+              <button type="button" class="trait" data-trait="Intuitivo">Intuitivo <span>+</span></button>
+            </div>
+          </div>
+        </form>
+      </aside>
+
+      <section class="sheet-panel">
+        <div class="sheet-heading">
+          <div>
+            <span class="section-kicker">FICHA DE AVENTUREIRO</span>
+            <h2 id="sheetName">Aster Valen</h2>
+          </div>
+          <span class="level-badge">NÍVEL <strong>01</strong></span>
+        </div>
+
+        <div class="stats-card">
+          <div class="stats-header"><span>ATRIBUTOS</span><span class="points-left"><b id="pointsLeft">12</b> pontos disponíveis</span></div>
+          <div class="stat-list" id="statList">
+            <div class="stat-row" data-stat="Força"><div class="stat-label"><span>Força</span><small>FOR</small></div><div class="stat-meter"><span style="width: 42%"></span></div><button class="stat-value minus" type="button" aria-label="Diminuir força">−</button><b class="stat-number">4</b><button class="stat-value plus" type="button" aria-label="Aumentar força">+</button></div>
+            <div class="stat-row" data-stat="Agilidade"><div class="stat-label"><span>Agilidade</span><small>AGI</small></div><div class="stat-meter"><span style="width: 68%"></span></div><button class="stat-value minus" type="button" aria-label="Diminuir agilidade">−</button><b class="stat-number">6</b><button class="stat-value plus" type="button" aria-label="Aumentar agilidade">+</button></div>
+            <div class="stat-row" data-stat="Intelecto"><div class="stat-label"><span>Intelecto</span><small>INT</small></div><div class="stat-meter"><span style="width: 84%"></span></div><button class="stat-value minus" type="button" aria-label="Diminuir intelecto">−</button><b class="stat-number">8</b><button class="stat-value plus" type="button" aria-label="Aumentar intelecto">+</button></div>
+            <div class="stat-row" data-stat="Presença"><div class="stat-label"><span>Presença</span><small>PRE</small></div><div class="stat-meter"><span style="width: 52%"></span></div><button class="stat-value minus" type="button" aria-label="Diminuir presença">−</button><b class="stat-number">5</b><button class="stat-value plus" type="button" aria-label="Aumentar presença">+</button></div>
+          </div>
+        </div>
+
+        <div class="lower-grid">
+          <div class="quote-card">
+            <span class="section-kicker">NOTA DE CAMPO</span>
+            <p id="quoteText">“A curiosidade é só a coragem usando uma máscara mais elegante.”</p>
+            <span class="quote-mark">”</span>
+          </div>
+          <div class="ability-card">
+            <div class="ability-icon">✧</div>
+            <div><span class="section-kicker">HABILIDADE INATA</span><h3 id="abilityName">Visão do Véu</h3><p id="abilityText">Enxerga a verdade por trás das ilusões.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="preview-panel">
+        <div class="preview-top"><span class="section-kicker">PRÉVIA DO PERSONAGEM</span><button class="more-button" type="button" title="Mais opções" aria-label="Mais opções">•••</button></div>
+        <div class="portrait-stage" id="portraitStage">
+          <div class="stage-grid"></div><div class="sun-disc"></div><div class="portrait-glow"></div>
+          <div class="character-art" id="characterArt">
+            <div class="character-shadow"></div><div class="cloak-back"></div><div class="body"></div><div class="belt"></div><div class="arm arm-left"></div><div class="arm arm-right"></div><div class="head"><span class="hair"></span><span class="face-mark">·</span></div><div class="hood"></div><div class="staff"><span></span></div>
+          </div>
+          <div class="portrait-label"><span id="portraitClass">ARCANISTA</span><strong id="portraitName">ASTER VALEN</strong></div>
+          <span class="coordinates">Nº 001 / 2024</span>
+        </div>
+        <div class="preview-footer"><div><span class="section-kicker">TRAÇOS</span><div class="selected-traits" id="selectedTraits"><span>Curioso</span><span>Leal</span></div></div><button class="share-button" id="shareButton" type="button" title="Copiar resumo da ficha" aria-label="Copiar resumo da ficha">↗</button></div>
+      </section>
+    </main>
+
+    <footer class="footer"><span>FORJA / ARQUIVO DE PERSONAGENS</span><span>FEITO PARA HISTÓRIAS QUE AINDA NÃO FORAM CONTADAS <b>✦</b></span></footer>
+  </div>
+  <div class="toast" id="toast" role="status">Ficha salva no seu navegador.</div>
+  <script src="script.js"></script>
+</body>
+</html>
