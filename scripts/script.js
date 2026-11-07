@@ -62,6 +62,98 @@ $$('#classChoices .choice-card').forEach((button) => button.addEventListener('cl
   state.className = button.dataset.class;
   setSelected('#classChoices .choice-card', 'class', state.className);
   render();
+
+  const game = {
+    width: 24, height: 10, player: { x: 3, y: 7 }, enemy: { x: 18, y: 7, alive: true },
+    health: 100, ore: 0, xp: 0, level: 1, blocks: []
+  };
+  const gameKey = 'forja-adventure';
+  const savedGame = localStorage.getItem(gameKey);
+  if (savedGame) {
+    try { Object.assign(game, JSON.parse(savedGame)); } catch { localStorage.removeItem(gameKey); }
+  }
+
+  function createWorld() {
+    game.blocks = [];
+    for (let y = 0; y < game.height; y += 1) {
+      for (let x = 0; x < game.width; x += 1) {
+        if (y >= 8 || (y === 7 && (x < 2 || x > 20)) || (y === 6 && [6, 7, 13, 14].includes(x))) {
+          game.blocks.push({ x, y, type: y === 8 ? 'dirt' : (Math.random() > .65 ? 'ore' : 'stone') });
+        }
+      }
+    }
+  }
+
+  function gameMessage(message) { $('#gameLog').textContent = message; }
+  function gamePosition(entity) { return { left: `${entity.x * (100 / game.width)}%`, top: `${entity.y * (100 / game.height)}%` }; }
+  function saveGame() { localStorage.setItem(gameKey, JSON.stringify(game)); }
+
+  function renderGame() {
+    const grid = $('#worldGrid');
+    grid.innerHTML = game.blocks.map((block) => `<span class="world-tile ${block.type}" style="grid-column:${block.x + 1};grid-row:${block.y + 1}"></span>`).join('');
+    const player = document.createElement('span');
+    player.className = 'game-entity game-player'; Object.assign(player.style, gamePosition(game.player)); grid.append(player);
+    if (game.enemy.alive) {
+      const enemy = document.createElement('span');
+      enemy.className = 'game-entity game-enemy'; Object.assign(enemy.style, gamePosition(game.enemy)); grid.append(enemy);
+    }
+    const levelXp = (game.level - 1) * 50;
+    const progress = Math.min(100, ((game.xp - levelXp) / 50) * 100);
+    $('#gameName').textContent = (state.name || 'Aventureiro').toUpperCase();
+    $('#gameHealth').textContent = `${game.health} / 100`;
+    $('#gameLevel').textContent = String(game.level).padStart(2, '0');
+    $('#gameOre').textContent = game.ore;
+    $('#inventoryOre').textContent = game.ore;
+    $('#inventoryXp').textContent = game.xp;
+    $('#questProgress').style.width = `${Math.min(100, game.ore * 20)}%`;
+    $('#questTitle').textContent = game.enemy.alive ? (game.ore >= 5 ? 'O guardião desperta' : 'A primeira escavação') : 'Caverna conquistada';
+    $('#questText').textContent = game.enemy.alive ? (game.ore >= 5 ? 'Derrote o guardião para concluir a expedição.' : 'Encontre 5 minérios para abrir o caminho até a caverna.') : 'Você venceu! Continue explorando para encontrar novos tesouros.';
+    $('#gameWorld').style.setProperty('--game-progress', `${progress}%`);
+    saveGame();
+  }
+
+  function movePlayer(dx, dy = 0) {
+    const next = { x: Math.max(0, Math.min(game.width - 1, game.player.x + dx)), y: Math.max(0, Math.min(game.height - 1, game.player.y + dy)) };
+    if (game.blocks.some((block) => block.x === next.x && block.y === next.y)) return gameMessage('Um bloco bloqueia o caminho. Tente minerar.');
+    game.player = next;
+    if (game.enemy.alive && Math.abs(game.player.x - game.enemy.x) + Math.abs(game.player.y - game.enemy.y) < 2) gameMessage('O guardião está perto! Ataque com espaço.');
+    renderGame();
+  }
+
+  function mine() {
+    const target = game.blocks.findIndex((block) => Math.abs(block.x - game.player.x) <= 1 && Math.abs(block.y - game.player.y) <= 1 && block.type !== 'dirt');
+    if (target < 0) return gameMessage('Não há minério ao seu alcance.');
+    const block = game.blocks.splice(target, 1)[0];
+    if (block.type === 'ore') { game.ore += 1; game.xp += 10; gameMessage('Minério de Umbra coletado!'); }
+    else gameMessage('Você abriu um caminho pela pedra.');
+    if (game.xp >= game.level * 50) { game.level += 1; gameMessage(`Nível ${game.level}! Sua aventura ficou mais perigosa.`); }
+    renderGame();
+  }
+
+  function attack() {
+    if (!game.enemy.alive) return gameMessage('A caverna está segura por enquanto.');
+    const distance = Math.abs(game.player.x - game.enemy.x) + Math.abs(game.player.y - game.enemy.y);
+    if (distance > 2) return gameMessage('Chegue mais perto do guardião para atacar.');
+    game.enemy.alive = false; game.xp += 50; gameMessage('Guardião derrotado! A caverna é sua.');
+    renderGame();
+  }
+
+  $$('[data-action]').forEach((button) => button.addEventListener('click', () => {
+    const action = button.dataset.action;
+    if (action === 'left') movePlayer(-1);
+    if (action === 'right') movePlayer(1);
+    if (action === 'mine') mine();
+    if (action === 'attack') attack();
+  }));
+  $('#gameWorld').addEventListener('keydown', (event) => {
+    const actions = { ArrowLeft: [-1, 0], a: [-1, 0], ArrowRight: [1, 0], d: [1, 0], ArrowUp: [0, -1], w: [0, -1], ArrowDown: [0, 1], s: [0, 1] };
+    if (actions[event.key]) { event.preventDefault(); movePlayer(...actions[event.key]); }
+    if (event.code === 'Space') { event.preventDefault(); attack(); }
+  });
+  $('#gameWorld').addEventListener('click', () => $('#gameWorld').focus());
+  $('#resetGameButton').addEventListener('click', () => { Object.assign(game, { player: { x: 3, y: 7 }, enemy: { x: 18, y: 7, alive: true }, health: 100, ore: 0, xp: 0, level: 1 }); createWorld(); renderGame(); gameMessage('Um novo mundo foi criado. Boa sorte, aventureiro!'); });
+  createWorld();
+  renderGame();
 }));
 
 $$('#colorChoices .swatch').forEach((button) => button.addEventListener('click', () => {

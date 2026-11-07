@@ -131,6 +131,54 @@
       </section>
     </main>
 
+    <section class="adventure" id="adventure">
+      <div class="adventure-heading">
+        <div>
+          <span class="section-kicker">EXPANSÃO / MUNDO ABERTO</span>
+          <h2>As Minas de <em>Umbra</em></h2>
+          <p>Leve seu personagem para uma aventura em um mundo de blocos. Explore, minere e enfrente o guardião da caverna.</p>
+        </div>
+        <button class="outline-button" id="resetGameButton" type="button">Novo mundo</button>
+      </div>
+      <div class="game-layout">
+        <div class="game-card">
+          <div class="game-hud">
+            <div><span class="hud-label">AVENTUREIRO</span><strong id="gameName">ASTER VALEN</strong></div>
+            <div class="hud-stat"><span>VIDA</span><b id="gameHealth">100 / 100</b></div>
+            <div class="hud-stat"><span>NÍVEL</span><b id="gameLevel">01</b></div>
+            <div class="hud-stat"><span>MINÉRIOS</span><b id="gameOre">0</b></div>
+          </div>
+          <div class="game-world" id="gameWorld" tabindex="0" aria-label="Mundo jogável">
+            <div class="world-sky"></div>
+            <div class="world-grid" id="worldGrid"></div>
+          </div>
+          <div class="game-controls">
+            <div class="control-hint"><b>WASD</b> ou setas para mover <span>•</span> <b>ESPAÇO</b> atacar</div>
+            <div class="control-buttons">
+              <button type="button" class="game-button" data-action="left" aria-label="Mover para esquerda">←</button>
+              <button type="button" class="game-button" data-action="mine">⛏ Minerar</button>
+              <button type="button" class="game-button attack-button" data-action="attack">⚔ Atacar</button>
+              <button type="button" class="game-button" data-action="right" aria-label="Mover para direita">→</button>
+            </div>
+          </div>
+        </div>
+        <aside class="quest-card">
+          <span class="section-kicker">DIÁRIO DE AVENTURA</span>
+          <h3 id="questTitle">A primeira escavação</h3>
+          <p id="questText">Encontre 5 minérios para abrir o caminho até a caverna.</p>
+          <div class="quest-progress"><span id="questProgress"></span></div>
+          <div class="inventory">
+            <span class="section-kicker">INVENTÁRIO</span>
+            <div class="inventory-items">
+              <span>◇ <b id="inventoryOre">0</b> minério</span>
+              <span>✦ <b id="inventoryXp">0</b> XP</span>
+            </div>
+          </div>
+          <div class="game-log" id="gameLog" aria-live="polite">A floresta está silenciosa. Use as setas para começar.</div>
+        </aside>
+      </div>
+    </section>
+
     <footer class="footer"><span>FORJA / ARQUIVO DE PERSONAGENS</span><span>FEITO PARA HISTÓRIAS QUE AINDA NÃO FORAM CONTADAS <b>✦</b></span></footer>
   </div>
   <div class="toast" id="toast" role="status">Ficha salva no seu navegador.</div>

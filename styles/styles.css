@@ -114,5 +114,49 @@ input:focus { border-color:var(--accent); }
 .footer b { color:var(--accent); margin-left:7px; }
 .toast { position:fixed; right:28px; bottom:28px; background:#e9dfcf; color:#24201a; padding:13px 17px; font-size:12px; transform:translateY(90px); opacity:0; transition:all .3s ease; pointer-events:none; }
 .toast.show { transform:translateY(0); opacity:1; }
+.adventure { border-top:1px solid var(--line); padding:66px 0 76px; }
+.adventure-heading { display:flex; justify-content:space-between; align-items:end; gap:30px; margin-bottom:28px; }
+.adventure-heading h2 { font-size:32px; letter-spacing:-.04em; margin-bottom:10px; }
+.adventure-heading h2 em { color:var(--accent); font-style:normal; }
+.adventure-heading p { color:#77787c; font-size:12px; line-height:1.6; max-width:490px; }
+.game-layout { display:grid; grid-template-columns:minmax(0, 1fr) 260px; gap:14px; }
+.game-card, .quest-card { background:#17181b; border:1px solid #303135; }
+.game-hud { min-height:66px; padding:14px 18px; display:flex; align-items:center; gap:28px; border-bottom:1px solid #303135; }
+.game-hud > div:first-child { margin-right:auto; display:flex; flex-direction:column; gap:5px; }
+.hud-label { color:#77787c; font-size:9px; letter-spacing:.14em; }
+.game-hud strong { font-family:var(--display); font-size:14px; letter-spacing:.03em; }
+.hud-stat { display:flex; flex-direction:column; gap:4px; color:#77787c; font-size:9px; letter-spacing:.12em; }
+.hud-stat b { color:var(--accent); font-size:12px; letter-spacing:0; }
+.game-world { height:330px; position:relative; overflow:hidden; outline:0; background:#1b2731; }
+.world-sky { position:absolute; inset:0; background:linear-gradient(#263d55 0%, #45606b 57%, #806b52 100%); }
+.world-grid { position:absolute; inset:0; display:grid; grid-template-columns:repeat(24, 1fr); grid-template-rows:repeat(10, 1fr); }
+.world-tile { position:relative; border-right:1px solid rgba(14,18,19,.14); border-bottom:1px solid rgba(14,18,19,.14); }
+.world-tile.dirt { background:#634a35; box-shadow:inset 0 5px #7f9b52, inset 0 8px #586f3f; }
+.world-tile.stone { background:#4d5054; box-shadow:inset 0 0 0 1px #62666a; }
+.world-tile.ore { background:#4d5054; box-shadow:inset 0 0 0 1px #62666a, inset 0 0 0 5px rgba(229,168,76,.22); }
+.world-tile.ore::after { content:'◇'; color:#e5a84c; display:grid; place-items:center; height:100%; font-size:14px; }
+.game-entity { position:absolute; z-index:3; width:4.16%; height:10%; display:grid; place-items:center; transition:transform .18s ease; }
+.game-player { color:var(--accent); font-size:22px; filter:drop-shadow(0 3px 2px #17202a); }
+.game-player::after { content:'◆'; }
+.game-enemy { color:#d67862; font-size:20px; filter:drop-shadow(0 3px 2px #17202a); }
+.game-enemy::after { content:'☠'; }
+.game-controls { min-height:62px; padding:12px 18px; display:flex; justify-content:space-between; align-items:center; gap:15px; border-top:1px solid #303135; }
+.control-hint { color:#77787c; font-size:10px; }
+.control-hint b { color:#b8b5ae; font-size:9px; }
+.control-hint span { color:var(--accent); margin:0 6px; }
+.control-buttons { display:flex; gap:6px; }
+.game-button { background:#242529; color:#bcbab3; border:1px solid #3b3c40; padding:8px 11px; font-size:11px; }
+.game-button:hover, .attack-button { color:var(--accent); border-color:#80612e; }
+.quest-card { padding:22px; }
+.quest-card h3 { font-size:18px; margin-bottom:10px; }
+.quest-card > p { color:#85868a; font-size:11px; line-height:1.55; min-height:52px; }
+.quest-progress { height:4px; background:#303135; margin:18px 0 26px; }
+.quest-progress span { display:block; height:100%; width:0; background:var(--accent); transition:width .3s ease; }
+.inventory { border-top:1px solid #303135; padding-top:20px; }
+.inventory .section-kicker { margin-bottom:12px; }
+.inventory-items { display:flex; flex-direction:column; gap:9px; color:#88898d; font-size:11px; }
+.inventory-items span:first-child { color:#d0aa61; }
+.inventory-items b { color:#eee9de; margin-right:3px; }
+.game-log { margin-top:28px; padding:12px; background:#202125; color:#88898d; font-size:10px; line-height:1.5; min-height:59px; }
 @media (max-width:1100px) { .app-shell { padding:0 22px; } .workspace { grid-template-columns:270px 1fr; } .preview-panel { grid-column:1 / -1; min-height:auto; padding:36px 0 55px; border-top:1px solid var(--line); } .portrait-stage { height:390px; } .preview-top, .preview-footer { max-width:600px; margin-left:auto; margin-right:auto; } .topbar-center { margin-left:0; } }
-@media (max-width:700px) { .app-shell { padding:0 16px; } .topbar { height:auto; min-height:72px; padding:15px 0; flex-wrap:wrap; } .topbar-center { order:3; width:100%; justify-content:space-between; } .topbar-actions { gap:6px; } .outline-button { padding:9px 10px; } .primary-button { padding:10px; } .primary-button span:first-child { display:none; } .workspace { display:block; } .editor-panel, .sheet-panel { border-right:0; border-bottom:1px solid var(--line); min-height:0; padding:38px 0; } .preview-panel { padding:38px 0 45px; } h1 { font-size:32px; } .lower-grid { grid-template-columns:1fr; margin-top:35px; } .footer { gap:20px; align-items:flex-start; padding:15px 0; flex-direction:column; } }
+@media (max-width:700px) { .app-shell { padding:0 16px; } .topbar { height:auto; min-height:72px; padding:15px 0; flex-wrap:wrap; } .topbar-center { order:3; width:100%; justify-content:space-between; } .topbar-actions { gap:6px; } .outline-button { padding:9px 10px; } .primary-button { padding:10px; } .primary-button span:first-child { display:none; } .workspace { display:block; } .editor-panel, .sheet-panel { border-right:0; border-bottom:1px solid var(--line); min-height:0; padding:38px 0; } .preview-panel { padding:38px 0 45px; } h1 { font-size:32px; } .lower-grid { grid-template-columns:1fr; margin-top:35px; } .adventure { padding:45px 0 55px; } .adventure-heading { align-items:flex-start; flex-direction:column; gap:18px; } .game-layout { grid-template-columns:1fr; } .game-hud { gap:12px; padding:12px; } .game-hud strong { font-size:11px; } .game-world { height:260px; } .game-controls { align-items:flex-start; flex-direction:column; } .control-buttons { width:100%; } .game-button { flex:1; padding:10px 5px; } .footer { gap:20px; align-items:flex-start; padding:15px 0; flex-direction:column; } }

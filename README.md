@@ -13,6 +13,7 @@ Criador de personagens construído somente com HTML, CSS e JavaScript, sem frame
 - Persistência dos dados no `localStorage` do navegador.
 - Cópia do resumo do personagem para a área de transferência.
 - Layout responsivo para desktop, tablet e celular.
+- Expansão jogável "As Minas de Umbra", com exploração, mineração, combate e progressão.
 
 ## Como executar
 
@@ -37,6 +38,10 @@ Depois, acesse `http://localhost:8000`.
 │   └── styles.css
 └── README.md
 ```
+
+## Expansão jogável
+
+Na seção **As Minas de Umbra**, use as setas ou WASD para explorar o mundo, `Espaço` para atacar e o botão **Minerar** para coletar minério. O progresso da aventura é salvo automaticamente no navegador, junto com a ficha do personagem.
 
 ## Tecnologias
 
